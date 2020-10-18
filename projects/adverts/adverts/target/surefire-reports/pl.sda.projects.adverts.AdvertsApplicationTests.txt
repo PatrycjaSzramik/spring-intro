@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: pl.sda.projects.adverts.AdvertsApplicationTests
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 11.528 s - in pl.sda.projects.adverts.AdvertsApplicationTests

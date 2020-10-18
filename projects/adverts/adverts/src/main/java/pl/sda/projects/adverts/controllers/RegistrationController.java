@@ -2,6 +2,7 @@ package pl.sda.projects.adverts.controllers;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,10 +18,12 @@ public class RegistrationController {
 
 
     private UserRepository userRepository;
+    private PasswordEncoder passwordEncoder;
 
     @Autowired   //userRepository bedzie teraz wstrzykniety przez Springa
-    public RegistrationController(UserRepository userRepository) {
+    public RegistrationController(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository=userRepository;
+        this.passwordEncoder=passwordEncoder;
     }
 
     @GetMapping   //met. zostala powolana do obslugi zadania http
@@ -36,9 +39,11 @@ public class RegistrationController {
                                           ModelMap model) {
         User user = User.builder()
                 .username(username)
-                .password(password)
+                .password(passwordEncoder.encode(password))
                 .firstName(firstName)
-                .lastName(lastName).build();
+                .lastName(lastName)
+                .active(true)
+                .build();
         log.debug("User to save: {}", user);
         userRepository.save(user);
         log.info("New usser saved: ",user);
